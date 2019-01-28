@@ -1,0 +1,129 @@
+1. What data types do each of these values represent?
+
+"A Clockwork Orange"
+42
+09/02/1945
+98.7
+$15.99
+
+
+A.  
+
+"A Clockwork Orange" is a STRING data type- it is text 
+
+42- is an Integer data type as it is a number 
+
+09/02/1945 is a date value
+
+98.7 is a float data type
+
+$15.99 is money or could also be smallmoney
+
+
+
+Explain when a database would be used. Explain when a text file would be used.
+
+A. A datababase is an application that allows users to manage data through an interface. The interface could be on a command line,
+GUI or as its own application on a server. It is used when there is a large amount of information to be stored, accessed and quiirred. 
+A text file would be used for smaller amounts of data. An example of this could be a bank account. If you are just keeping records for 
+your own personal checking account a text file or single page excel file may be sufficient to store your data. If you are keeping track 
+of finincal records for a large company where there may be many different bank accounts, payables and payees this information would probably
+be better stored in some type of database. Databases allow us to store and organize information and then based on like ids or table properties
+pull that inforamtion togeteher for reporting or comparison reasons. 
+
+Describe one difference between SQL and other programming languages.
+
+A. The primary difference between SQL and other conventional programming languages is that SQL statements specify that data operations should be 
+performed rather than how to perform them. SQL does one thing, it defines queries. The queries are similar to programs but you dont use them
+to make games or web servers, quiers are good and getting information from databases. 
+
+In your own words, explain how the pieces of a database system fit together at a high level.
+
+A. The way I see it there are four main componenets of a database system; users, database applicatioin, Database Management System and
+the database itsself. A user of a database system is someone who operates on the UI of the database, this is someone who will use the database
+to track things, use forms to enter, read, delete and query data and produce reports. The database application is a set of one or more
+computer programs that serves as an intermediary between the user and the database management system. The Database Management System serves 
+as an intermediary between database applications and the database. It manages and controls the activites of the database and creates, processes
+and administers the database it controls. The functions of database managment system are to create databases, create tables, create supporting
+structures, read database data, modify database data, mantaint structures, enforce rules, control concurrency, provide security and preform 
+backup and recovery. The Database itsseld is a self-describing collection of related records. A database is made up of tables within a relational
+database. 
+
+
+
+Database systems are used to hold and store user data and information. Most real world management systems use
+database systems for daily operations. 
+
+Explain the meaning of table, row, column, and value.
+
+A. 
+
+ Table- It consists of columns, and rows. In relational databases, and flat file databases, a table is a set of data elements (values) 
+ using a model of vertical columns (identifiable by name) and horizontal rows, the cell being the unit where a row and column intersect.
+
+ Row- row (sometimes called a record) is the set of fields within a table that are relevant to a specific entity. For example, in a table
+ called customer contact information, a row would likely contain fields such as: ID number, name, street address, city, telephone number 
+ and so on.
+
+ Column - Column is a set of data values of a particular simple type, one value for each row of the database. A column may contain text 
+ values, numbers, or even pointers to files in the operating system. ... A column can also be called an attribute.
+
+
+ Value - The value is the information being stored in the database.  
+
+List three data types that can be used in a table.
+
+A. 3 different datatypes are STRING, DATE and INTIGER 
+
+Given this payments table, provide an English description of the following queries and include their results:
+
+     SELECT date, amount
+     FROM payments;
+
+     SELECT amount
+     FROM payments
+     WHERE amount > 500;
+
+     SELECT *
+     FROM payments
+     WHERE payee = 'Mega Foods';
+
+
+From the PAYMENTS table 
+SELECT the DATE and AMOUNT
+
+
+FROM the PAYMENTS TABLE
+SELECT AMOUTS 
+WHERE AMOUNTS are GREATER THAN 500;
+
+FROM PAYMENTS TABLE
+Select ALL records 
+Where PAYEE is Mega FOODS
+
+Given this users table, write SQL queries using the following criteria and include the output:
+
+The email and sign-up date for the user named DeAndre Data.
+
+The user ID for the user with email 'aleesia.algorithm@uw.edu'.
+
+All the columns for the user ID equal to 4.
+
+A. The email and sign-up date for the user named DeAndre Data.
+
+SELECT email, sign-up date
+FROM users 
+WHERE user = 'DeAndre Data';
+
+The user ID for the user with email 'aleesia.algorithm@uw.edu'.
+
+SELECT id 
+FROM USER 
+Where EMAIL = 'aleesia.algorithm@uw.edu';
+
+All the columns for the user ID equal to 4.
+
+SELECT *
+FROM user
+WHERE ID = 4;
+
