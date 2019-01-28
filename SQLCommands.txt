@@ -1,0 +1,234 @@
+Exercises
+Use the commands above to complete the following tasks, and submit the SQL statements. Real-world examples must be distinct from 
+those used in the text.
+
+1. List the commands for adding, updating, and deleting data.
+
+A. The Commands for adding, updating and deleting data are :
+
+	1. to ADD data to a table you use INSERT INTO 
+	2. to UPDATE data to a table you use UPDATE
+	3. to DELETE data from a table you use DELETE
+
+2. Explain the structure for each type of command.
+
+A. When using INSERT INTO, UPDATE or DELETE to modify an existing database, you need to be care ful that the structure around what you
+are doing is correct so that your database has the correct results. 
+
+	1. When looking to ADD data to a table you use INTERT INTO. you need to make sure to include the table name, and then the column 
+	names that you want to inser into. You then need to use the keyword VALUES to indicate the values being entered into the cells
+	followed by the information to be entered into the table. 
+	
+	ex. If you had a table called resturants, each resturant would have a specific ID, as well as the NAME of the resturant and maybe
+		the type of resturant it was. 
+		If our resturants were IHop, Applebees and Red Lobster, the INSERT statement to add these resurtants to the resturant table
+		would look like this
+		
+		INSERT INTO resturants (id, name, type)
+		VALUES
+		(001, 'IHop', 'breakfast'),
+		(002, 'Applebees', 'bar and grill'),
+		(003, 'Red Lobster', 'seafood');
+
+	2. When looking to UPDATE data in a table you need to make sure to include the table name, SET which indicates what values you want to
+	change and WHERE which normally points to an ID and lets the database know what record you want to change the information for. 
+
+		EX. Lets say you are a bookkeeper and a customer who was past due just paid their bill. Before the data base was updated it
+		may look something like this
+
+		id	name	amount 	
+		003	SomeCo	$5,000			
+
+		If payment was received this record would need to be updated. We can do this as follows
+
+		UPDATE customer SET amount =0.00 WHERE id=003;
+
+	3. When looking to DELETE data in a table you need to include the table name, as well ad WHERE you want to delete the data from. It is
+	always a good idea when using DELETE to pick a column that has its own uniqe value for the WERE clause to make sure you dont delete any
+	information accidentally. 
+
+
+	EX. lets say we own a company that sells car parts and we no longer sell parts for Chevy cars and need to take them out of 
+	our invintory. Our starting table called Parts would look like this
+
+	id	description	part number	manufacturer 	vehicle type
+
+	01	some car part	23035		Chevy		car
+	02	some truck part	23135		Chevy		truck
+	03	some car part	23235		Chevy		car
+	04	some car part	23335		Honda		car
+
+	to remove all of the Chevy Cars the code would look like this
+	DELETE FROM parts WHERE manufacturer='Chevy' AND vehicle type = 'car';
+
+
+3. What are some of the data types that can be used in tables? Give a real-world example of each type.
+
+A. SQL data types can be broadly divided into following categories.
+
+	1. Numeric data types such as int, tinyint, bigint, float, real etc.
+		A real world example of this could be the quantity of items a store has in stock.
+	2. Date and Time data types such as Date, Time, Datetime etc.
+		A database could be set up to hold a place value for a date and time information was entered. 
+		Another application for Date and Time datatypes could be if you were setting up a table and
+		wanted to hold ancesrty information and include vital records that would show date and time 
+		such as birth, marrage or death. 
+	3. Character and String data types such as char, varchar, text etc.
+		A real world example of this could be any typed information that your database would hold.
+		so lets say you had a database that need to hold a customers name, the name catigory would be
+		a string.
+
+
+4. Decide how to create a new table to hold a list of people invited to a wedding dinner. The table needs to have first and last names, 
+whether they sent in their RSVP, the number of guests they are bringing, and the number of meals (1 for adults and 1/2 for children).
+
+
+- Which data type would you use to store each of the following pieces of information?
+
+	First and last name.   text
+	Whether they sent in their RSVP.   text
+	Number of guests.  numeric
+	Number of meals. numeric
+
+- Write a command that creates the table to track the wedding dinner.
+
+	CREATE TABLE wedding (
+		id integer,
+		first_name text,
+		last_name text,
+		RSVP_Received text,
+		Number_of_Guests numeric (1,0),
+		Number_of_meals numeric (1, 1)
+);
+
+
+- Write a command that adds a column to track whether the guest sent a thank you card.
+
+	ALTER TABLE wedding ADD COLUMN thank_you_card_received text;
+
+- You have decided to move the data about the meals to another table, so write a command to remove the column storing the number meals
+   from the wedding table.
+	
+	AlTER TABLE wedding DROP COLUMN Number_of_meals;
+
+- The guests will need a place to sit at the reception, so write a command that adds a column for table number.
+
+	ALTER TABLE wedding ADD COLUMN table_number text;
+
+- The wedding is over and we do not need to keep this information, so write a command that deletes the table numbers from the database.
+
+	ALTER TABLE wedding DROP COLUMN table_number;
+
+5. Write a command to create a new table to hold the books in a library with the columns ISBN, title, author, genre, publishing date, 
+number of copies, and available copies.
+
+CREATE TABLE books (
+id integer,
+ISBN numeric,
+title tinytext,
+author tinytext, 
+genre tinytext, 
+publishing_date date,
+number_of_copies numeric,
+available_copies numeric
+);
+
+
+
+- Find three books and add their information to the table.
+
+A. 
+
+Books I found- 
+
+	Alice In Wonderland by Lewis Carroll ISBN 9788862777216 Genre Fiction Publishing date 11/26/1865 
+	Scaredy Squirrel Makes a Friend by Melanie Watt ISBN 9781905117871 Genre Childrens Fiction Publishing date 03/01/2006
+	Take a Chance on Me by Jill Mansell ISBN 9789021018232 Genre Romance Publishing Date 02/18/2010
+
+Code to insert them into the book table 
+
+INSERT INTO books (id, ISBN, title, author, genre, publishing_date, number_of_copies, available_copies)
+VALUES
+(001, 9788862777216, 'Alice In Wonderland','Lewis Carroll','Fiction', '1865-11-26', 5, 3),
+(002, 9781905117871, 'Scaredy Squirrel Makes a Friend', 'Melanie Watt','Childrens Fiction', '2001-03-01', 2, 2),
+(003, 9789021018232, 'Take a Chance on Me', 'Jill Mansell','Romance', '2010-02-18', 2, 1)
+);
+
+
+- Someone has just checked out one of the books. Change the number of available copies to 1 fewer.
+
+UPDATE books SET available_copies= 1 WHERE id =002;
+
+- Now one of the books has been added to the banned books list. Remove it from the table.
+
+DELETE FROM books WHERE id=001;
+
+6. Write a command to make a new table to hold spacecrafts. Information should include id, name, year launched, country of origin, 
+a brief description of the mission, orbiting body, if it is currently operating, and its approximate miles from Earth. 
+In addition to the table creation, provide commands that perform the following operations:
+
+A.
+ CREATE TABLE spacecrafts (
+id integer,
+name text,
+year numeric(4, 0),
+county_of_origin text,
+mission_description varchar,
+orbiting_body text,
+currently_operating text, 
+miles_from_earth numeric (20,4)
+);
+
+- Add three non-Earth-orbiting satellites to the table.
+
+INSERT INTO spacecrafts ( id, name, year, country_of_origin, mission_description, orbiting_body, currently_operating, miles_from_earth)
+VALUES
+(001, 'spaceship1', 'USA', 'mars expo', 'mars', 'yes', 234345.0342),
+ 002, 'spaceship2', 'Germany', 'Saturn expo', 'saturn', 'yes', 9034564.0021),
+ 003, 'spaceship3', 'Japan', 'Pluto Expo', 'Pluto', 'yes', 102938453.0345)
+);
+
+-Remove one of the satellites from the table since it has just crashed into the planet.
+
+DELETE FROM spacecrafts WHERE id=003;
+
+-Edit another satellite because it is no longer operating and change the value to reflect that.
+
+UPDATE spacecrafts SET currently_orbiting='No' WHERE id =001;
+
+Write a command to create a new table to hold the emails in your inbox. This table should include an id, the subject line, 
+the sender, any additional recipients, the body of the email, the timestamp, whether or not you have read the email, and the 
+id of the email chain it's in. 
+
+CREATE TABLE email (
+id integer,
+subject text,
+sender varchar,
+additional_recipients varchar,
+body_of_email varchar, 
+timestamp datetime,
+read text,
+email_chain_id integer
+);
+
+
+Also provide commands that perform the following operations:
+
+- Add three new emails to the inbox.
+
+INSERT INTO email (id, subject, sender, additional_recipients, body_of_email, timestamp, read, email_chain_id)
+VALUES
+( 001, 'Follow up', 'jenniferm221@gmail.com', 'Hello jennifer, wanted to follow up on our phone call', '2019-01-01 12:03:01', 'read', 234352),
+( 002, 'hello', 'jenn.mclaughlin@outlook.com', 'Hi Jenn!', '2018-12-27 01:09:12', 'unread', 457412),
+( 003, 'Update', 'test@yahoo.com', 'Here is an update for your recent order. Thank you for shopping with us', '2019-01-23 03:14:07', 'read', 532147),
+);
+
+-You deleted one of the emails, so write a command to remove the row from the inbox table.
+
+DELETE FROM email WHERE id=003;
+
+
+You started reading an email but just heard a crash in another room. Mark the email as unread before investigating the crash, 
+so you can come back and read it later.
+
+UPDATE email SET read='unread' WHERE id=001;
