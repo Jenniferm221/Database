@@ -111,19 +111,35 @@ All the columns for the user ID equal to 4.
 
 A. The email and sign-up date for the user named DeAndre Data.
 
-SELECT email, sign-up date
+SELECT email, signup
 FROM users 
-WHERE user = 'DeAndre Data';
+WHERE name = 'DeAndre Data';
+
+
+Output
+
+email	signup
+datad@comcast.net	2008-01-20T00:00:00.000Z
+
 
 The user ID for the user with email 'aleesia.algorithm@uw.edu'.
 
-SELECT id 
-FROM USER 
-Where EMAIL = 'aleesia.algorithm@uw.edu';
+SELECT userid 
+FROM users
+Where email = 'aleesia.algorithm@uw.edu';
+
+Output
+
+userid
+1
 
 All the columns for the user ID equal to 4.
 
 SELECT *
-FROM user
-WHERE ID = 4;
+FROM users
+WHERE userid = 4;
+
+output
+userid	name	email	signup
+4	Brandy Boolean	bboolean@nasa.gov	1999-10-15T00:00:00.000Z
 
