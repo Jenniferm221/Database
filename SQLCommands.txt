@@ -86,7 +86,7 @@ whether they sent in their RSVP, the number of guests they are bringing, and the
 - Which data type would you use to store each of the following pieces of information?
 
 	First and last name.   text
-	Whether they sent in their RSVP.   text
+	Whether they sent in their RSVP.   boolean
 	Number of guests.  numeric
 	Number of meals. numeric
 
@@ -96,7 +96,7 @@ whether they sent in their RSVP, the number of guests they are bringing, and the
 		id integer,
 		first_name text,
 		last_name text,
-		RSVP_Received text,
+		RSVP_Received boolean,
 		Number_of_Guests numeric (1,0),
 		Number_of_meals numeric (1, 1)
 );
@@ -104,7 +104,7 @@ whether they sent in their RSVP, the number of guests they are bringing, and the
 
 - Write a command that adds a column to track whether the guest sent a thank you card.
 
-	ALTER TABLE wedding ADD COLUMN thank_you_card_received text;
+	ALTER TABLE wedding ADD COLUMN thank_you_card_received boolean;
 
 - You have decided to move the data about the meals to another table, so write a command to remove the column storing the number meals
    from the wedding table.
@@ -168,25 +168,25 @@ a brief description of the mission, orbiting body, if it is currently operating,
 In addition to the table creation, provide commands that perform the following operations:
 
 A.
- CREATE TABLE spacecrafts (
-id integer,
-name text,
-year numeric(4, 0),
-county_of_origin text,
-mission_description varchar,
-orbiting_body text,
-currently_operating text, 
-miles_from_earth numeric (20,4)
-);
+CREATE TABLE spacecrafts (
+  id	integer,
+  name	text,
+  mission_year	integer,
+  country	text,
+  description	varchar(100),
+  orbiting	text,
+  currently_operating	boolean,
+  miles_from_earth	numeric(20,4)
+  );
 
 - Add three non-Earth-orbiting satellites to the table.
 
-INSERT INTO spacecrafts ( id, name, year, country_of_origin, mission_description, orbiting_body, currently_operating, miles_from_earth)
+INSERT INTO spacecrafts ( id, name, mission_year, country, description, orbiting, currently_operating, miles_from_earth)
+
 VALUES
-(001, 'spaceship1', 'USA', 'mars expo', 'mars', 'yes', 234345.0342),
- 002, 'spaceship2', 'Germany', 'Saturn expo', 'saturn', 'yes', 9034564.0021),
- 003, 'spaceship3', 'Japan', 'Pluto Expo', 'Pluto', 'yes', 102938453.0345)
-);
+(001, 'spaceship1', 2004, 'USA', 'mars expo', 'mars', 'yes', 234345.0342),
+(002, 'spaceship2', 2018, 'Germany', 'Saturn expo', 'saturn', 'yes', 9034564.0021),
+(003, 'spaceship3', 1943, 'Japan', 'Pluto Expo', 'Pluto', 'yes', 102938453.0345);
 
 -Remove one of the satellites from the table since it has just crashed into the planet.
 
@@ -194,21 +194,22 @@ DELETE FROM spacecrafts WHERE id=003;
 
 -Edit another satellite because it is no longer operating and change the value to reflect that.
 
-UPDATE spacecrafts SET currently_orbiting='No' WHERE id =001;
+UPDATE spacecrafts 
+SET currently_operating ='no' WHERE id =001;
 
-Write a command to create a new table to hold the emails in your inbox. This table should include an id, the subject line, 
+7. Write a command to create a new table to hold the emails in your inbox. This table should include an id, the subject line, 
 the sender, any additional recipients, the body of the email, the timestamp, whether or not you have read the email, and the 
 id of the email chain it's in. 
 
-CREATE TABLE email (
-id integer,
-subject text,
-sender varchar,
-additional_recipients varchar,
-body_of_email varchar, 
-timestamp datetime,
-read text,
-email_chain_id integer
+CREATE TABLE email ( 
+  id 		integer,
+subject 	text, 
+sender 		varchar(40), 
+additional_recipients 	varchar(100), 
+body_of_email 		varchar(300), 
+date_time 		timestamp, 
+email_read 		boolean NOT null, 
+email_chain_id integer 
 );
 
 
@@ -216,12 +217,13 @@ Also provide commands that perform the following operations:
 
 - Add three new emails to the inbox.
 
-INSERT INTO email (id, subject, sender, additional_recipients, body_of_email, timestamp, read, email_chain_id)
-VALUES
-( 001, 'Follow up', 'jenniferm221@gmail.com', 'Hello jennifer, wanted to follow up on our phone call', '2019-01-01 12:03:01', 'read', 234352),
-( 002, 'hello', 'jenn.mclaughlin@outlook.com', 'Hi Jenn!', '2018-12-27 01:09:12', 'unread', 457412),
-( 003, 'Update', 'test@yahoo.com', 'Here is an update for your recent order. Thank you for shopping with us', '2019-01-23 03:14:07', 'read', 532147),
-);
+INSERT INTO email (id, subject, sender, additional_recipients, body_of_email, date_time, email_read, email_chain_id) 
+
+VALUES 
+(001, 'Follow up', 'jenniferm221@gmail.com', 'jenniferm221@gmail.com', 'Hello jennifer, wanted to follow up on our phone call', '2019-01-01 12:03:01', true , 234352 ),
+( 002, 'hello', 'jenn.mclaughlin@outlook.com', 'someemail@aol.com', 'Hi Jenn!', '2018-12-27 01:09:12', false, 457412),
+( 003, 'Update', 'test@yahoo.com', 'bestemail@hotmail.com', 'Here is an update for your recent order. Thank you for shopping with us', '2019-01-23 03:14:07', true, 532147);
+
 
 -You deleted one of the emails, so write a command to remove the row from the inbox table.
 
@@ -231,4 +233,4 @@ DELETE FROM email WHERE id=003;
 You started reading an email but just heard a crash in another room. Mark the email as unread before investigating the crash, 
 so you can come back and read it later.
 
-UPDATE email SET read='unread' WHERE id=001;
+UPDATE email SET email_read=false WHERE id=001;
