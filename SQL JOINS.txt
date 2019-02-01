@@ -1,0 +1,383 @@
+1. How do you find related data held in two separate data tables?
+
+	A. Every table in a database has a primary key or "id". Using the Primary key in one table can help you link to a forign key
+          in another data table. This works because since we are dealing with relational databases, some information is stored 
+		or present in more than one data table. lets consider the following example
+		
+		SELECT * from student_progress
+
+		id/pk		Bloc_student		Chkpointid
+		001		'Jennifer'		123
+		002		'Thomas'		456
+		003		'Lynn'			456
+		004		'James'			67	
+		005		'Harrison'		123
+		006		'Maddie'		67
+
+		By looking at the information above, we can see each student in the student progess table has their own identifying Primary 
+		Key in the id/pk column. We can also see that each checkpoint has an assigned number value. Lets look at another table:
+
+		SELECT * from checkpoint;
+
+		chkpointid	description	
+		67		'HTML Basics'
+		123		'React Concepts'
+		456		'Node JS Fundimentals'
+
+		The related data here is the chkpoint id- so we could infact join these two tables to show the student, chekpoint id and
+		discription in a new table by JOINING the tables by the Primary Key of the student and the forign id of the checkpoint.
+
+
+
+2. Explain, in your own words, the difference between an INNER JOIN, LEFT OUTER JOIN, and RIGHT OUTER JOIN. 
+   Give a real-world example for each.
+
+	A. When we retrieve data from more than one table we use joins to connect the data together to give us the desired output. 
+
+		INNER JOIN- The INNER JOIN keyword selects records that have matching values in both tables. Lets consider an example:
+				
+			table name contacts
+				````
+				fname 		lname		address 	phone_number
+				'jenn'		'mclaughlin'	'123 main st'	555-555-5555
+				'tony'		'tiger'		'34 gn mills ln' 555-532-1234
+				'ned'		'stark'		'1 winterfell'	222-222-2222
+				````
+			table name school
+
+				````
+				fname		lname	 		teacher		grade
+				'barry'		'hill'			'klunder'	2
+				'jenn'		'mclaughlin'		'nicholson'	12
+				'tony'		'smith'			'frost'		6
+				'ned'		'stark'			'lanister'	4	
+				````
+
+		So in looking at these two tables we can see some common value sets between the contacts table and the school table.
+		fname, and lname. 
+
+		So using the join method we can make a new table from both of these sets of information. Lets say we want to make a new
+		table that takes the contacts first name, last name and phone number and join it with their teacher and grade from the
+		school table. The SELECT statement to do this would look as follows
+
+			````
+			SELECT contacts.fname, contacts.lname, contacts.phone_number, school.teacher, school.grade
+			FROM contacts INNER JOIN school
+			on contacts.fname= school.fname AND contacts.lname = school.lname
+			````
+		This would then produce code the following
+		
+			````
+			fname		lname		phone_number	teacher		grade
+			'jenn'		'mclaughlin'	555-555-5555  	'nicholson'	  12
+			'ned'		'stark'		222-222-2222	'lanister'	   4
+
+			````
+
+
+		LEFT OUTTER JOIN- pulls all records from the left table (table1), and the matched records from the right table (table2). 
+				The result is NULL from the right side, if there is no match.
+
+				Keeping with my example above lets look at the following two tables
+
+				table name contacts
+				````
+				fname 		lname		address 	phone_number
+				'jenn'		'mclaughlin'	'123 main st'	555-555-5555
+				'tony'		'tiger'		'34 gn mills ln' 555-532-1234
+				'ned'		'stark'		'1 winterfell'	222-222-2222
+				````
+				
+				table name school
+
+				````
+				fname		lname	 		teacher		grade
+				'barry'		'hill'			'klunder'	2
+				'jenn'		'mclaughlin'		'nicholson'	12
+				'tony'		'smith'			'frost'		6
+				'ned'		'stark'			'lanister'	4
+
+				Now lets look at the statement using LEFT join on these two tables
+
+				````
+				SELECT contacts.fname, contacts.lname, contacts.phone_number, school.teacher, school.grade
+				FROM contacts 
+				LEFT OUTTER JOIN school
+				ON contacts.fname= school.fname AND contacts.lname = school.lname
+				````
+
+				using LEFT JOIN or LEFT OUTTER JOIN would return the following data
+
+				````
+				fname		lname		phone_number	teacher		grade
+				'jenn'		'mclaughlin'	555-555-5555  	'nicholson'	  12
+				'ned'		'stark'		222-222-2222	'lanister'	   4
+				'tony'		'tiger'		NULL	 	NULL		NULL
+				````
+				since tony tiger is in our first (left) table, it is pulled into the result. However
+				since Tony Tiger is not in our second table, phone number, teacher and grade are NULL
+
+
+
+	
+			RIGHT OUTTER JOIN- pulls all records from the Right table (table2), and the matched records from the left table 
+					(table2). The result is NULL from the left side, if there is no match.
+		
+				Keeping with my example above lets look at the following two tables
+
+				table name contacts
+				````
+				fname 		lname		address 	phone_number
+				'jenn'		'mclaughlin'	'123 main st'	555-555-5555
+				'tony'		'tiger'		'34 gn mills ln' 555-532-1234
+				'ned'		'stark'		'1 winterfell'	222-222-2222
+				````
+				
+				table name school
+
+				````
+				fname		lname	 		teacher		grade
+				'barry'		'hill'			'klunder'	2
+				'jenn'		'mclaughlin'		'nicholson'	12
+				'tony'		'smith'			'frost'		6
+				'ned'		'stark'			'lanister'	4
+
+				Now lets look at the statement using RIGHT OUTTER join on these two tables
+
+				````
+				SELECT contacts.fname, contacts.lname, contacts.phone_number, school.teacher, school.grade
+				FROM contacts 
+				RIGHT OUTTER JOIN school
+				ON contacts.fname= school.fname AND contacts.lname = school.lname
+				````
+
+				using RIGHT JOIN or RIGHT OUTTER JOIN would return the following data
+
+				````
+				fname		lname		phone_number	teacher		grade
+				'barry'		'hill'		NULL		'klunder'	2
+				'jenn'		'mclaughlin'	555-555-555	'nicholson'	12
+				'tony'		'smith'		NULL		'frost'		6
+				'ned'		'stark'		222-222-2222	'lanister'	4
+				````
+		
+
+3.Define primary key and foreign key. Give a real-world example for each.
+
+	A. A Primary key allows each row in a table to be uniquely identified and ensures that no duplicate rows exist and 
+	no null values are entered. A Foreign key is used to create a relationship between two tables, and can be a duplicate or
+	null value. An example of this could be students in a school. Every student could have their own unique ID number which would
+	be the primary key. However each student also has their own homeroom number which would be a foreign key. A database could hold
+	this information on the same table or two different tables and the information could be used to join tables to present a new data
+	set.
+
+4. Define aliasing.
+	A. when you here alaising- think Alias. Aliases allow database admins and users the ability to reduce the amount of code required
+	for a query and to make queries easier to understand. This can allow for a better user experiance in a database, and make it so the
+	information is easier to understand. The general syntax of an alias is SELECT * FROM table_name [AS] alias_name. Alias's can be made 
+	for entire tables or individual columns.
+
+5.Change this query so that you are using aliasing:
+
+SELECT professor.name, compensation.salary, compensation.vacation_days 
+FROM professor 
+JOIN compensation ON professor.id = compensation.professor_id;
+
+	A. 
+		````
+		SELECT p.name, c.salary, c.vacation_days
+    		FROM professor AS p
+    		JOIN compensation AS c ON p.id = c.professor_id;
+		````
+
+6.Why would you use a NATURAL JOIN? Give a real-world example.
+	A. A NATURAL JOIN is a JOIN operation that creates an implicit join clause for you based on the common columns in the two 
+	tables being joined. Common columns are columns that have the same name in both tables. A NATURAL JOIN can be an INNER join, 
+	a LEFT OUTER join, or a RIGHT OUTER join.
+	
+	Natural Join: Guidelines:
+
+		The associated tables have one or more pairs of identically named columns.
+		The columns must be the same data type.
+		Don’t use ON clause in a NATURAL JOIN.
+
+	A real world example of this could be with sales/inventory. lets look at a category and a product table
+
+	so lets say you had a list for different electronics by there type like below
+	
+	````
+	CATEGORY TABLE
+
+	CATEGORY_ID	CATEGORY_NAME
+		1	Mobiles
+		2	Laptops
+		3	Laptops
+		4	Cameras
+		5	Gaming
+	````
+
+	and you had another list that showed you the specific manufacturers of the electronics
+
+	````
+	PRODUCT TABLE
+	
+	CATEGORY_ID	PRODUCT_NAME
+		1	Nokia
+		1	Samsung
+		2	HP
+		2	Dell
+		3	Apple
+		4	Nikon
+		Null	Playstation
+	````
+	to combine these two tables using natural join the statement would look like this
+
+	````
+	SELECT *
+	FROM product
+	NATURAL JOIN category
+	````
+
+	This would join the tables by their shared column of category  ID and would look at follows
+
+	````
+	CATEGORY_ID 	PRODUCT_NAME     CATEGORY_ID 	CATEGORY_NAME
+	
+          1 		Nokia            1		 Mobiles
+          1 		Samsung          1 		 Mobiles
+          2 		HP               2           	 Laptops
+          2 		Dell             2 		 Laptops
+          3 		Apple            3 		 Tablet
+          4 		Nikon            4 		 Cameras
+	````
+
+	Now combining the two tables by CATEGORY_ID and allowing you to see the product name and the type
+	or category of the product. 
+
+	
+
+7. Using this Employee schema and data, write queries to find the following information:
+	
+	1. List all employees and all shifts.
+
+	A.
+		````
+		SELECT 
+		employees.id, employees.name, 
+		shifts.date, shifts.start_time, shifts.end_time
+		FROM employees
+		INNER JOIN scheduled_shifts
+		ON employees.id = scheduled_shifts.employee_id
+		INNER JOIN shifts
+		ON shifts.id = scheduled_shifts.shift_id
+		````
+
+8. Using this Adoption schema and data, please write queries to retrieve the following information and include the results:
+
+	1.Create a list of all volunteers. If the volunteer is fostering a dog, include each dog as well.
+
+	A.
+		````
+		SELECT
+		volunteers.first_name, volunteers.last_name, volunteers.address, volunteers.phone_number, 
+		volunteers.available_to_foster, dogs.name, dogs.gender, dogs.age, dogs.weight, dogs.breed
+		FROM volunteers
+		LEFT JOIN dogs
+		ON volunteers.foster_dog_id = dogs.id
+		````
+
+
+	2.The cat's name, adopter's name, and adopted date for each cat adopted within the past month to be displayed as part of the 
+	"Happy Tail" social media promotion which posts recent successful adoptions.
+
+	A.
+
+		````
+		SELECT
+		cats.name,
+        	adopters.first_name, adopters.last_name,
+        	cat_adoptions.date
+		FROM cats
+		JOIN cat_adoptions
+		ON cats.id = cat_adoptions.cat_id
+        	JOIN adopters
+        	ON adopters.id = cat_adoptions.adopter_id
+        	WHERE cat_adoptions.date >= '2018-12-31 00:00:00.000' 
+		AND cat_adoptions.date <= '2019-02-01 00:00:00.000'
+		````
+
+	3. Create a list of adopters who have not yet chosen a dog to adopt.
+
+	A.
+		````
+		SELECT cats.name, 'cat' AS animal_type
+		FROM cats 
+		LEFT JOIN cat_adoptions
+		ON cats.id = cat_adoptions.cat_id
+		WHERE cat_adoptions.cat_id is null
+		UNION
+		SELECT dogs.name, 'dog' AS animal_type
+		FROM dogs
+		LEFT JOIN dog_adoptions
+		ON dogs.id = dog_adoptions.dog_id
+		WHERE dog_adoptions.dog_id is null;
+		````
+
+	4.Lists of all cats and all dogs who have not been adopted.
+
+		````
+		SELECT cats.name, 'cat' AS animal_type
+		FROM cats 
+		LEFT JOIN cat_adoptions
+		ON cats.id = cat_adoptions.cat_id
+		WHERE cat_adoptions.cat_id is not null
+		UNION
+		SELECT dogs.name, 'dog' AS animal_type
+		FROM dogs
+		LEFT JOIN dog_adoptions
+		ON dogs.id = dog_adoptions.dog_id
+		WHERE dog_adoptions.dog_id is not null;
+		````
+
+
+	5.The name of the person who adopted Rosco.
+
+		````
+		SELECT adopters.first_name, adopters.last_name  
+		FROM adopters
+		LEFT JOIN dog_adoptions
+		ON adopters.id = dog_adoptions.adopter_id
+		WHERE dog_adoptions.dog_id = 10007;
+		````
+
+9. Using this Library schema and data, write queries applying the following scenarios and include the results:
+
+	1. To determine if the library should buy more copies of a given book, please provide the names and position, 
+   	in order, of all of the patrons with a hold (request for a book with all copies checked out) on "Advanced Potion-Making".
+		
+	A. 
+	````
+	select patrons.name, books.title, holds.date, holds.rank
+	FROM patrons 
+	RIGHT JOIN holds
+	ON patrons.id = holds.patron_id
+	RIGHT JOIN books
+	ON books.isbn = holds.isbn
+	WHERE books.title = 'Advanced Potion-Making'
+	ORDER BY holds.rank;
+	````
+
+
+	2. List all of the library patrons. If they have one or more books checked out, list the books with the patrons.
+
+	````
+	Select DISTINCT p.name, b.title AS Currently_Checked_Out
+	FROM patrons AS p
+	LEFT JOIN transactions AS t
+    	ON p.id = t.patron_id
+    	LEFT JOIN books AS b
+    	ON b.isbn = t.isbn AND
+        t.checked_in_date is NULL;
+	````
+
+	
