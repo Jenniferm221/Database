@@ -4,7 +4,7 @@ those used in the text.
 
 1. List the commands for adding, updating, and deleting data.
 
-A. The Commands for adding, updating and deleting data are :
+A. The Commands for adding, updating and deleting data are 
 
 	1. to ADD data to a table you use INSERT INTO 
 	2. to UPDATE data to a table you use UPDATE
